@@ -134,13 +134,23 @@ def eda():
 
     # 히스토그램(Age, Height, Weight, BMI 분포)
     with chart_tabs[0]:
-        st.subheader("연령, 키, 몸무게, 분포")
-        fig, axes = plt.subplots(2,2,figsize=(12,8))
-        columns = ["Age","Height","Weight","BMI"]
+        st.subheader("연령, 키, 몸무게, BMI 분포")
+
+        # ✅ 서브플롯 생성 (2x2 그리드)
+        fig, axes = plt.subplots(2, 2, figsize=(12, 8))
+
+        # ✅ 조정할 열 지정
+        columns = ["Age", "Height", "Weight", "BMI"]
+
+        # ✅ 각 서브플롯에 히스토그램 추가
         for i, col in enumerate(columns): 
-            ax = axes[i//2, i%2]
-            sns.histplot(df[col],bins=20,kde=True,ax=ax)
+            ax = axes[i // 2, i % 2]  # 2행 2열로 배치
+            sns.histplot(df[col], bins=20, kde=True, ax=ax)
             ax.set_title(col)
+
+        # ✅ 서브플롯 간 여백 조정 (hspace=0.4: 위아래 간격, wspace=0.3: 좌우 간격)
+        fig.subplots_adjust(hspace=0.4, wspace=0.3)
+
         st.pyplot(fig)
 
     # 박스플롯(성별 및 비만 등급별 BMI)
